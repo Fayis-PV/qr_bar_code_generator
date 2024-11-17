@@ -56,19 +56,25 @@ def qrcode_generator(base_url,student_id,output_path):
             if value:  # Only draw black (filled) modules
                 x = col_index * qr.box_size
                 y = row_index * qr.box_size
-                # if (row_index < 9 and col_index < 9) or (row_index < 9 and col_index >= len(qr.get_matrix())-9) or (row_index >= len(qr.get_matrix())-9 and col_index < 9):
-                #     continue
+                if (row_index < 9 and col_index < 9) or (row_index < 9 and col_index >= len(qr.get_matrix())-9) or (row_index >= len(qr.get_matrix())-9 and col_index < 9):
+                    continue
             
-                # if value:  # Only draw filled (black) modules
-                draw_rounded_rect(draw, (x, y), (qr.box_size, qr.box_size), radius, 'black')
+                if value:  # Only draw filled (black) modules
+                    draw_rounded_rect(draw, (x, y), (qr.box_size, qr.box_size), radius, 'black')
 
     # Draw the three large corner blocks with rounded borders (single rectangle)
     # Top-left corner
-    # draw_rounded_rect(draw, (24, 24), (7 * qr.box_size, 7 * qr.box_size), 20, 'black')
-    # # Top-right corner
-    # draw_rounded_rect(draw, ((len(qr.get_matrix())-9) * qr.box_size, 24), (7 * qr.box_size, 7 * qr.box_size), 20, 'black')
-    # # Bottom-left corner
-    # draw_rounded_rect(draw, (24, (len(qr.get_matrix())-9) * qr.box_size), (7 * qr.box_size, 7 * qr.box_size), 20, 'black')
+    draw_rounded_rect(draw, (24, 24), (7 * qr.box_size, 7 * qr.box_size), 20, 'crimson')
+    draw_rounded_rect(draw, (36, 36), (5 * qr.box_size, 5 * qr.box_size), 15, 'white')
+    draw_rounded_rect(draw, (48, 48), (3 * qr.box_size, 3 * qr.box_size), 10, 'crimson')
+    # Top-right corner
+    draw_rounded_rect(draw, ((len(qr.get_matrix())-9) * qr.box_size, 24), (7 * qr.box_size, 7 * qr.box_size), 20, 'darkorange')
+    draw_rounded_rect(draw, ((len(qr.get_matrix())-8) * qr.box_size, 36), (5 * qr.box_size, 5 * qr.box_size), 15, 'white')
+    draw_rounded_rect(draw, ((len(qr.get_matrix())-7) * qr.box_size, 48), (3 * qr.box_size, 3 * qr.box_size), 10, 'darkorange')
+    # Bottom-left corner
+    draw_rounded_rect(draw, (24, (len(qr.get_matrix())-9) * qr.box_size), (7 * qr.box_size, 7 * qr.box_size), 20, 'deepskyblue')
+    draw_rounded_rect(draw, (36, (len(qr.get_matrix())-8) * qr.box_size), (5 * qr.box_size, 5 * qr.box_size), 15, 'white')
+    draw_rounded_rect(draw, (48, (len(qr.get_matrix())-7) * qr.box_size), (3 * qr.box_size, 3 * qr.box_size), 10, 'deepskyblue')
 
     img = add_rounded_corners(img, radius)
     
@@ -88,7 +94,7 @@ def generate_barcode(student_id, output_path):
     barcode_instance.save(output_path,{"module_width":0.35, "module_height":8, "font_size": 6, "text_distance": 4, "quiet_zone": 3})
 
 
-candidate_data = pd.read_excel('C:/Users/fayis/Desktop/Sibaq/qrcode/candidates.xlsx')
+candidate_data = pd.read_excel('E:/Storage Folder/Sibaq/qrcode/candidates.xlsx')
 
 base_url = 'https://result.sibaq.in/search?student='
 
