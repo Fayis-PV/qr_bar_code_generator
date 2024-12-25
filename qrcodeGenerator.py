@@ -84,7 +84,7 @@ def qrcode_generator(base_url,student_id,output_path):
 def generate_barcode(student_id, output_path):
     """Generate a barcode (Code128) for the student ID and save it."""
 
-    barcode_instance = Cod(student_id, writer=ImageWriter())
+    barcode_instance = Code128(student_id, writer=ImageWriter())
     barcode_instance.writer.module_height = 5
     print(barcode_instance)
     barcode_instance.save(output_path,{"module_width":0.35, "module_height":8, "font_size": 6, "text_distance": 4, "quiet_zone": 3})
