@@ -2,7 +2,7 @@ import os
 import qrcode
 import pandas as pd
 from PIL import Image, ImageDraw
-from barcode.ean import EAN13
+from barcode import Code128
 from barcode.writer import ImageWriter,SVGWriter
 from io import BytesIO
 
@@ -77,27 +77,21 @@ def qrcode_generator(base_url,student_id,output_path):
     draw_rounded_rect(draw, (48, (len(qr.get_matrix())-7) * qr.box_size), (3 * qr.box_size, 3 * qr.box_size), 10, 'deepskyblue')
 
     img = add_rounded_corners(img, radius)
-    
     # Save QR code image using Admission Number as the file name
     img.save(output_path)
-
-    
-
 
 # Function to generate barcode for student ID
 def generate_barcode(student_id, output_path):
     """Generate a barcode (Code128) for the student ID and save it."""
 
-    barcode_instance = EAN13(student_id, writer=ImageWriter())
+    barcode_instance = Cod(student_id, writer=ImageWriter())
     barcode_instance.writer.module_height = 5
     print(barcode_instance)
     barcode_instance.save(output_path,{"module_width":0.35, "module_height":8, "font_size": 6, "text_distance": 4, "quiet_zone": 3})
 
-
 candidate_data = pd.read_excel('E:/Storage Folder/Sibaq/qrcode/candidates.xlsx')
 
 base_url = 'https://result.sibaq.in/search?student='
-
 qrcode_folder = 'qrcodes'
 barcode_folder = 'barcodes'
 os.makedirs(qrcode_folder, exist_ok=True)
@@ -122,6 +116,5 @@ for index, row in candidate_data.iterrows():
         generate_barcode(student_id,barcode_filepath)
     else:
         print("Error in generating Barcode: ", student_id, 'is not valueable Number') 
-    break
-
+    
 print(f"QR codes and Bar codes have been saved in the '{qrcode_folder}' folder and '{barcode_folder}' with Admission Numbers as file names.")
